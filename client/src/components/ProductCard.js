@@ -3,26 +3,40 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import './styles.css';
 
-const CustomCard = ({ item }) => {
+const ProductCard = ({ item, onAddToCart, isItemInCart, onRemoveFromCart }) => {
   const { name, instructor, date, domain, image_url } = item;
 
+  const handleAddToCart = () => {
+    onAddToCart(item);
+  };
+
+  const handleRemoveFromCart = () => {
+    onRemoveFromCart(item.id);
+  };
+
   return (
-    <Card style={{ width: '18rem', margin: '20px', boxShadow: '0 4px 8px rgba(0,0,0,0.1)' }}>
-      <div style={{ backgroundColor: 'white', borderBottom: '2px solid #ccc', padding: '10px' }}>
-        <Card.Img variant="top" src={image_url} style={{ height: '200px', objectFit: 'contain' }} />
+    <Card className="product-card">
+      <div className="img-container">
+        <Card.Img variant="top" src={image_url} className="img" />
       </div>
-      <Card.Body style={{ backgroundColor: '#ffe5ec' }}>
-        <Card.Title style={{ color: '#333', borderBottom: '2px solid #ccc', paddingBottom: '8px' }}>{name}</Card.Title>
-        <Card.Text><strong style={{ color: '#555' }}>Instructor:</strong> {instructor}</Card.Text>
-        <Card.Text><strong style={{ color: '#555' }}>Domain:</strong> {domain}</Card.Text>
-        <Card.Text><strong style={{ color: '#555' }}>Start Date:</strong> {date}</Card.Text>
-        <Button variant="primary" className="custom-button">
-          Add to Cart
-        </Button>
+      <Card.Body className="card-body">
+        <Card.Title className="card-title">{name}</Card.Title>
+        <Card.Text className="card-text"><strong>Instructor:</strong> {instructor}</Card.Text>
+        <Card.Text className="card-text"><strong>Domain:</strong> {domain}</Card.Text>
+        <Card.Text className="card-text"><strong>Start Date:</strong> {date}</Card.Text>
+        {isItemInCart ? (
+          <Button variant="primary" className="custom-button" onClick={handleRemoveFromCart}>
+            Remove from Cart
+          </Button>
+        ) : (
+          <Button variant="primary" className="custom-button" onClick={handleAddToCart}>
+            Add to Cart
+          </Button>
+        )}
       </Card.Body>
     </Card>
   );
 };
 
-export default CustomCard;
+export default ProductCard;
 

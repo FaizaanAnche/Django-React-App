@@ -1,11 +1,12 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import CustomCard from './ProductCard';
-import "./styles.css"
+import ShoppingCart from './ShoppingCart';
+import './styles.css';
+import ProductCard from './ProductCard';
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState([]);
 
   const getProducts = async () => {
     try {
@@ -17,19 +18,35 @@ const HomePage = () => {
     }
   };
 
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+  };
+
+  const removeFromCart = (productId) => {
+    const updatedCart = cart.filter(item => item.id !== productId);
+    setCart(updatedCart);
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
 
   return (
-    <div className="body" style={{ backgroundImage: "url('https://example.com/background.jpg')", backgroundSize: 'cover', minHeight: '100vh', padding: '40px 20px' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <h1 style={{ textAlign: 'center', marginBottom: '30px', color: 'black' }}>Online Courses</h1>
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around' }}>
+    <div className="body">
+      <div className="container">
+        <h1 className="title">Online Courses</h1>
+        <div className="card-container">
           {products.map((product, index) => (
-            <CustomCard key={index} item={product} />
+            <ProductCard
+              key={index}
+              item={product}
+              onAddToCart={addToCart}
+              isItemInCart={cart.some(item => item.id === product.id)}
+              onRemoveFromCart={removeFromCart}
+            />
           ))}
         </div>
+        <ShoppingCart cart={cart} removeFromCart={removeFromCart} />
       </div>
     </div>
   );
