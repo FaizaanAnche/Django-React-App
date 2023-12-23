@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'OnlineCourses',
         'CLIENT': {
-           'host': 'mongodb+srv://Faizaan:faizaan@cluster0.lwgx9ya.mongodb.net/?retryWrites=true&w=majority',
+           'host': 'mongodb+srv://Faizaan:******@cluster0.lwgx9ya.mongodb.net/?retryWrites=true&w=majority',
         }
     }
 }
